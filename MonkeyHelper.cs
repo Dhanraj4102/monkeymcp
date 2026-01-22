@@ -28,7 +28,8 @@ public static class MonkeyHelper
     /// <summary>
     /// Gets the list of all monkeys.
     /// </summary>
-    public static IReadOnlyList<Monkey> GetMonkeys() => monkeys;
+    public static IReadOnlyList<Monkey> GetMonkeys()
+        => monkeys.AsReadOnly();
 
     /// <summary>
     /// Gets a random monkey from the collection.
@@ -46,6 +47,9 @@ public static class MonkeyHelper
     /// <returns>The monkey with the specified name, or null if not found.</returns>
     public static Monkey? GetMonkeyByName(string name)
     {
+        if (string.IsNullOrWhiteSpace(name))
+            return null;
+
         foreach (var monkey in monkeys)
         {
             if (string.Equals(monkey.Name, name, StringComparison.OrdinalIgnoreCase))
@@ -53,6 +57,7 @@ public static class MonkeyHelper
                 return monkey;
             }
         }
+
         return null;
     }
 }
